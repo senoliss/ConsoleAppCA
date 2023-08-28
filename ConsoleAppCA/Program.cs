@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Channels;
 
 namespace ConsoleAppCA
 {
@@ -16,30 +17,106 @@ namespace ConsoleAppCA
             while (true)
             {
 
-                Console.WriteLine("Issirinkite uzduoti nuo 1 iki 10: ");
-                int slct = 0;
-                try
+                //Console.WriteLine("Issirinkite uzduoti nuo 1 iki 10: ");
+                Console.WriteLine("Issirinkite uzduoti nuo 1 iki 12: ");
+                string slct = Console.ReadLine();
+
+                //try
+                //{
+                //    slct = Int32.Parse(Console.ReadLine());
+                //}
+                //catch
+                //{
+                //    Console.WriteLine("Wrong Selection! ");
+
+                //    if(slct.ToString() == "projektas")
+                //    {
+                //        Console.Write("do you want to open IF PROJECT? y/n: ");
+                //        string selection = Console.ReadLine();
+
+                //        if (selection == "y")
+                //        {
+                //            projektas();
+                //        }
+
+                //        else if (selection == "n")
+                //        {
+                //            Console.WriteLine("bye bye");
+                //            navigacija();
+                //        }
+                //    }
+                //}
+                switch (slct)
                 {
-                    slct = Int32.Parse(Console.ReadLine());
-                }
-                catch
-                {
-                    Console.WriteLine("Wrong Selection! ");
+                    case "1":
+                        uzduotis1();
+                        break;
+
+                    case "2":
+                        uzduotis2();
+                        break;
+
+                    case "3":
+                        uzduotis3();
+                        break;
+
+                    case "4":
+                        uzduotis4();
+                        break;
+
+                    case "5":
+                        uzduotis5();
+                        break;
+
+                    case "6":
+                        uzduotis6();
+                        break;
+
+                    case "7":
+                        uzduotis7();
+                        break;
+
+                    case "8":
+                        uzduotis8();
+                        break;
+
+                    case "9":
+                        uzduotis9();
+                        break;
+
+                    case "10":
+                        uzduotis10();
+                        break;
+
+                    case "projektas":
+                        projektas();
+                        break;
+                    case "11":
+                        uzduotis11();
+                        break;
+                    case "12":
+                        uzduotis12();
+                        break;
+
+                    default:
+                        Console.WriteLine("blogas pasirinkimas");
+                        break;
                 }
 
-                if (slct == 1) uzduotis1();
-                else if (slct == 2) uzduotis2();
-                else if (slct == 3) uzduotis3();
-                else if (slct == 4) uzduotis4();
-                else if (slct == 5) uzduotis5();
-                else if (slct == 6) uzduotis6();
-                else if (slct == 7) uzduotis7();
-                else if (slct == 8) uzduotis8();
-                else if (slct == 9) uzduotis9();
-                else if (slct == 10) uzduotis10();
-                else if (slct > 10) Console.WriteLine("Wong Selection!");
+                //if (slct == 1) uzduotis1();
+                //else if (slct == 2) uzduotis2();
+                //else if (slct == 3) uzduotis3();
+                //else if (slct == 4) uzduotis4();
+                //else if (slct == 5) uzduotis5();
+                //else if (slct == 6) uzduotis6();
+                //else if (slct == 7) uzduotis7();
+                //else if (slct == 8) uzduotis8();
+                //else if (slct == 9) uzduotis9();
+                //else if (slct == 10) uzduotis10();
+                //else if (slct > 10) Console.WriteLine("Wong Selection!");
             }
         }
+        #region IfStatementUzduotys
         static void uzduotis1()
         {
             Console.WriteLine("nebaigta! go back to menu press 'q': ");
@@ -2146,19 +2223,288 @@ namespace ConsoleAppCA
 
         static void uzduotis7()
         {
-            bool dalus3 = if()
+            Console.WriteLine("nebaigta! go back to menu press 'q': ");
+            string ab = Console.ReadLine();
+            if (ab == "q")
+            {
+                navigacija();
+            }
         }
         static void uzduotis8()
         {
-
+            Console.WriteLine("nebaigta! go back to menu press 'q': ");
+            string ab = Console.ReadLine();
+            if (ab == "q")
+            {
+                navigacija();
+            }
         }
         static void uzduotis9()
         {
-
+            Console.WriteLine("nebaigta! go back to menu press 'q': ");
+            string ab = Console.ReadLine();
+            if (ab == "q")
+            {
+                navigacija();
+            }
         }
         static void uzduotis10()
         {
+            Console.WriteLine("nebaigta! go back to menu press 'q': ");
+            string ab = Console.ReadLine();
+            if (ab == "q")
+            {
+                navigacija();
+            }
+        }
+        static void projektas()
+        {
+            Console.WriteLine("=======================SVEIKI ATVYKE I PROJEKTA=======================");
+            Console.WriteLine();
+            Console.WriteLine("======================================================================");
+
+            Console.WriteLine("nebaigta! go back to menu press 'q': ");
+            string ab = Console.ReadLine();
+            if (ab == "q")
+            {
+                navigacija();
+            }
+        }
+        #endregion
+
+        static void uzduotis11()
+        {
+            while (true)
+            {
+                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+                Console.WriteLine("1. Savaites programa");
+                Console.WriteLine("2. Amziaus programa");
+                Console.WriteLine("3. Menesio programa");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
+
+                if (xb == 1)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite savaites diena skaitmenisku pavidalu (1-7) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+
+                        var result = miauS switch
+                        {
+                            1 => "Pirmadienis",
+                            2 => "Antradienis",
+                            3 => "Treciadienis",
+                            4 => "Ketvirtadienis",
+                            5 => "Penktadienis",
+                            6 => "Sestadienis",
+                            7 => "Sekmadieinis",
+                            _ => "Savaites diena neegzistuoja"
+                        };
+                        Console.WriteLine(result);
+                    }
+                }
+
+                else if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite savo amziu skaitmenisku pavidalu :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+
+                        var result = miauS switch
+                        {
+                            < 1 => "Negimes",
+                            < 7 => "Vaikas",
+                            < 18 => "Moksleivis",
+                            < 25 => "Studentas",
+                            < 65 => "Darbuotojas",
+                            > 66 => "Pensininkas",
+                            _ => "Wrong"
+                        };
+                        Console.WriteLine(result);
+                    }
+                }
+
+                else if (xb == 3)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite menesio numeri skaitmenisku pavidalu (1-12) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+
+                        var result = miauS switch
+                        {
+                            1 => "Sausis",
+                            2 => "Vasaris",
+                            3 => "Kovas",
+                            4 => "Balandis",
+                            5 => "Geguze",
+                            6 => "Birzelis",
+                            7 => "Liepa",
+                            8 => "Rugpjutis",
+                            9 => "Rugsejis",
+                            10 => "Spalis",
+                            11 => "Lapkritis",
+                            12 => "Gruodis",
+                            _ => "Menesis neegzistuoja"
+                        };
+                        Console.WriteLine(result);
+                    }
+                }
+            }
+
+
+
+            //switch(miau)
+            //{
+            //    case "1":
+            //        // do this
+            //    break;
+            //}
+        }
+        static void uzduotis12()
+        {
+            while (true)
+            {
+                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+                Console.WriteLine("1. Geometriniu figuru programa");
+                Console.WriteLine("2. Pagrindiniu elementu programa");
+                Console.WriteLine("3. Universitetu specialybiu programa");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);     // reikia paparsinti taip kad pasirinkus kazka kito nei 1-3 arba 'q' mstu blogas pasirinkimas
+
+                if (xb == 1)
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Pasirinkite viena is keturiu geometriniu figuru, " +
+                                "ivesdami pirmaja raide: \nkvadratas - k, apskritimas - a, " +
+                                "trikampis - t, staciakampis - s");
+
+                        string miau = Console.ReadLine();
+
+                        if (miau == "q") break;
+
+                        switch (miau)
+                        {
+                            case "k":
+                                Console.WriteLine("Iveskite kvadrato krastine: ");
+                                int krastine = int.Parse(Console.ReadLine());
+                                krastine *= krastine;
+                                Console.WriteLine("Pasirinkto kvadrato plotas yra: " + krastine);
+                                break;
+
+                            case "a":
+                                Console.WriteLine("Iveskite apskritimo spinduli: ");
+                                int spindulys = int.Parse(Console.ReadLine());
+                                //spindulys = Convert.ToDouble((spindulys^2*3.141592));
+                                double apskrPlot = Math.Pow(spindulys, 2) * 3.141592;
+                                Console.WriteLine("Pasirinkto apskritimo plotas yra: " + apskrPlot);
+                                break;
+
+                            case "t":
+                                Console.WriteLine("Iveskite trikampio aukstine: ");
+                                int krastine3 = int.Parse(Console.ReadLine());
+                                Console.WriteLine("Iveskite trikampio pagrinda: ");
+                                int krastine4 = int.Parse(Console.ReadLine());
+                                int plotas = (krastine3 * krastine4) / 2;
+                                Console.WriteLine("Pasirinkto trikampio plotas yra: " + plotas);
+                                break;
+
+                            case "s":
+                                Console.WriteLine("Iveskite staciakampio ilgi: ");
+                                int krastine5 = int.Parse(Console.ReadLine());
+                                Console.WriteLine("Iveskite staciakampio ploti: ");
+                                int krastine6 = int.Parse(Console.ReadLine());
+                                krastine5 *= krastine6;
+                                Console.WriteLine("Pasirinkto staciakampio plotas yra: " + krastine5);
+                                break;
+
+                            default:
+                                Console.WriteLine("Wrong input!");
+                                break;
+                        }
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                }
+                else Console.WriteLine("Wrong input!");
+            }
+
+            //string pasirinkimas = Console.ReadLine();
+
 
         }
+        //static void pavyzdys()
+        //{
+        //    while (true)
+        //    {
+        //        Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+        //        Console.WriteLine("1. Geometriniu figuru programa");
+        //        Console.WriteLine("2. Pagrindiniu elementu programa");
+        //        Console.WriteLine("3. Universitetu specialybiu programa");
+        //        var ab = Console.ReadLine();
+        //        if (ab == "q") break;
+        //        int xb = int.Parse(ab);
+
+        //        if (xb == 1)
+        //        {
+        //            while (true)
+        //            {
+        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+        //                var miau = Console.ReadLine();
+        //                if (miau == "q") break;
+        //                int miauS = int.Parse(miau);
+        //            }
+        //        }
+        //        if (xb == 2)
+        //        {
+        //            while (true)
+        //            {
+        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+        //                var miau = Console.ReadLine();
+        //                if (miau == "q") break;
+        //                int miauS = int.Parse(miau);
+        //            }
+        //        }
+        //        if (xb == 2)
+        //        {
+        //            while (true)
+        //            {
+        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+        //                var miau = Console.ReadLine();
+        //                if (miau == "q") break;
+        //                int miauS = int.Parse(miau);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
