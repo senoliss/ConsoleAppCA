@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Threading.Channels;
+using System.Net.Http;
 
 namespace ConsoleAppCA
 {
@@ -97,6 +99,9 @@ namespace ConsoleAppCA
                     case "12":
                         uzduotis12();
                         break;
+                    case "13":
+                        uzduotis13();
+                        break;
 
                     default:
                         Console.WriteLine("blogas pasirinkimas");
@@ -174,7 +179,6 @@ namespace ConsoleAppCA
 
             }
         }
-
         static void uzduotis5()
         {
             //  -Parašykite C# programą, kuri patikrintų vartotojo įvestą metų skaičių ir nustatytų, ar tai yra keliamieji metai pagal šią logiką:
@@ -203,1874 +207,6 @@ namespace ConsoleAppCA
                 }
                 else { Console.WriteLine("Wron input, not a number..."); }
             }
-        }
-
-        static void uzduotis6fail()
-        {
-            // -Sukurkite programą, kuri atspausdintų 7 produktus su jiems priskirtomis kainomis.
-            //  Programa turėtų leisti į krepšelį įsidėti 3 produktus.
-            // -Jei vartotojas perka 2 vienodus produktus krepšelis gauna -10 % akciją.
-            //  Jei perka 3 vienodus gauna -15 % krepšelio akciją.
-            // -Įsidėjus 3 produktus prieš atspausdinant čekį programa turėtų paklausti vartotojo ar jis turi lojalumo kortelę.
-            //  Jei vartotojas turi lojalumo kortelę krepšelis gauna dar papildomą - 10 % akciją.
-
-            // *Papildoma:
-            //  Padarykite taip, kad perkant 2 produktus ne krepšelis gauna akciją, bet tik perkami 2 produktai.
-
-            while (true)                                                                             // This is to repeat the code in console for debugging
-            {
-
-                // kintamieji
-                int pirkiniai = 0;                                                                  // Integer to count while loop to break after three selections
-                int pirkiniuKiekis = 3;                                                             // Max amount of products in shopping cart
-                string p1 = "1L Pieno-5";
-                //double k1 = 1.59;
-                string p2 = "Pintine kiaushiniu-3";
-                //double k2 = 2;
-                string p3 = "1kg Obuoliu-2";
-                //double k3 = 1.80;
-                string p4 = "250g Shilauogiu-4";
-                //double k4 = 4.5;
-                string p5 = "Dedes viralo viedriux-9";
-                //double k5 = 9.99;
-                string p6 = "500g Surio-5";
-                //double k6 = 3.25;
-                string p7 = "Babos tapkes-8";
-                //double k7 = 5;
-                string valiuta = "Eur.";                                                            // Random for better visuality
-
-                Console.WriteLine("===================== E-Farm Menu =====================");
-
-                Console.WriteLine("Produktas nr.1 : " + p1 + valiuta);
-                Console.WriteLine("Produktas nr.2 : " + p2 + valiuta);
-                Console.WriteLine("Produktas nr.3 : " + p3 + valiuta);
-                Console.WriteLine("Produktas nr.4 : " + p4 + valiuta);
-                Console.WriteLine("Produktas nr.5 : " + p5 + valiuta);
-                Console.WriteLine("Produktas nr.6 : " + p6 + valiuta);
-                Console.WriteLine("Produktas nr.7 : " + p7 + valiuta);
-
-                Console.WriteLine("=======================================================");
-
-                // Read the user input of three products and discount card
-                Console.Write("Pirmasis produktas: ");
-                int pirkinys1 = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Antrasis produktas: ");
-                int pirkinys2 = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Treciasis produktas: ");
-                int pirkinys3 = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Ar turite nuolaidu kortele? y/n: ");
-                string card = Console.ReadLine();
-
-                bool tenProc = pirkinys1 == pirkinys2 || pirkinys1 == pirkinys3 || pirkinys2 == pirkinys3;      // ar bent du produktai yra vienodi
-                bool qrtProc = pirkinys1 == pirkinys2 && pirkinys1 == pirkinys3;                                // ar visi trys vienodi
-                bool disCard = false;
-                int cartSum = 0;
-                double sumTotal = 0;
-                string dscnt = "";
-                int ab = 0;
-
-                #region nesamone
-                // increase the cart sum price NESAMONE CIA YRA TIEK IF NESTINT VIENA SU KITU
-
-                //while (pirkiniai < 3)
-                //{
-                //    if (pirkinys1 == 1)
-                //    {
-                //        cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf('-') + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if(pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if(pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                }
-                //            }
-                //        else if (pirkinys2 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                }
-                //            }
-                //        else if (pirkinys2 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                }
-                //            }
-                //        else if (pirkinys2 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                }
-                //            }
-                //        else if (pirkinys2 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                }
-                //            }
-                //        else if (pirkinys2 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //                if(pirkinys3 == 1)
-                //                {
-                //                    cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //                }
-                //                else if(pirkinys3 == 2)
-                //                {
-                //                    cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //                else if(pirkinys3 == 3)
-                //                {
-                //                    cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //                else if(pirkinys3 == 4)
-                //                {
-                //                    cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //                else if(pirkinys3 == 5)
-                //                {
-                //                    cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //                else if(pirkinys3 == 6)
-                //                {
-                //                    cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //                else if(pirkinys3 == 7)
-                //                {
-                //                    cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            }
-
-                //    }
-                //    else if (pirkinys1 == 2)
-                //    {
-                //        cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-
-                //    }
-                //    else if (pirkinys1 == 3)
-                //    {
-                //        cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-
-                //    }
-                //    else if (pirkinys1 == 4)
-                //    {
-                //        cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-
-                //    }
-                //    else if (pirkinys1 == 5)
-                //    {
-                //        cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-
-                //    }
-                //    else if (pirkinys1 == 6)
-                //    {
-                //        cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //            }
-                //        }
-
-                //    }
-                //    else if (pirkinys1 == 7)
-                //    {
-                //        cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //        if (pirkinys2 == 1)
-                //        {
-                //            cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 2)
-                //        {
-                //            cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 3)
-                //        {
-                //            cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 4)
-                //        {
-                //            cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 5)
-                //        {
-                //            cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 6)
-                //        {
-                //            cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-                //        else if (pirkinys2 == 7)
-                //        {
-                //            cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-
-                //            if (pirkinys3 == 1)
-                //            {
-                //                cartSum += Convert.ToInt32(p1.Substring(p1.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 2)
-                //            {
-                //                cartSum += Convert.ToInt32(p2.Substring(p2.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 3)
-                //            {
-                //                cartSum += Convert.ToInt32(p3.Substring(p3.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 4)
-                //            {
-                //                cartSum += Convert.ToInt32(p4.Substring(p4.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 5)
-                //            {
-                //                cartSum += Convert.ToInt32(p5.Substring(p5.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 6)
-                //            {
-                //                cartSum += Convert.ToInt32(p6.Substring(p6.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //            else if (pirkinys3 == 7)
-                //            {
-                //                cartSum += Convert.ToInt32(p7.Substring(p7.IndexOf("-") + 1, 1));
-                //                break;
-                //            }
-                //        }
-
-                //    }
-
-                //    pirkiniai++;
-                //}
-                #endregion
-
-                //bool state = true;
-                //int ab = 0;
-                //while (state)
-                //{
-                //    if (pirkinys1 == ab)
-                //    {
-                //        cartSum += 
-                //    }
-                //    else if (pirkinys1 != ab)
-                //    {
-                //        ab++;
-                //    }
-                //}
-                //cartSum += Convert.ToInt32(pirkinys1.Substring(8, 1));
-
-                ////cartSum += Convert.ToInt32(pirkinys1.Substring(pirkinys1.IndexOf('-'), 1));
-                //cartSum += Convert.ToInt32(pirkinys2.Substring(pirkinys2.IndexOf("-") + 1, 1));
-                //cartSum += Convert.ToInt32(pirkinys3.Substring(pirkinys3.IndexOf("-") + 1, 1));
-
-                if (card == "y")
-                {
-                    disCard = true;
-                }
-                if (tenProc)
-                {
-                    sumTotal = cartSum * 0.9;
-                    dscnt = "10 Proc.";
-
-                    if (disCard)
-                    {
-                        // give adittional 10 proc discount to cart / sum of products
-                        sumTotal *= 0.9;
-                        dscnt = "20 Proc.";
-                    }
-                }
-
-                if (qrtProc)
-                {
-                    // give 15 proc discount to the cart / sum of products
-                    sumTotal = cartSum * 0.85;
-                    dscnt = "15 Proc.";
-                    if (disCard)
-                    {
-                        // give adittional 10 proc discount to cart / sum of products
-                        sumTotal *= 0.9;
-                        dscnt = "25 Proc.";
-                    }
-                }
-
-                Console.WriteLine("Is viso suma: " + cartSum);
-                Console.WriteLine("Nuolaida: " + dscnt);
-                Console.WriteLine("Galutine kaina: " + sumTotal);
-            }
-
-            // TRY TO COMPLICATE THE CODE
-            // Either i should enter the products into a multidim array or a dictionary to place an product and it's price as one object somehow
-
-            //Console.WriteLine("Issirinkite produktus atskirtus kableliu (,) ir spauskite enter!");
-            //Console.Write(" (pvz.: 1,1,7,3,2,6,6,5): ");
-
-            //string pirkiniai = Console.ReadLine();
-
-            //Console.WriteLine("Jusu sarasas: " + pirkiniai);
-
-            //while (true)        // a while cycle to continue shopping
-            //{
-            //    Console.Write("Isirinkus produkto numeri spauskite enter (pvz 5), norint baigti apsipirkima rasykite: 'baigta' ");
-            //    string pirkinys1 = Console.ReadLine();
-            //    string pirkinys2 = Console.ReadLine();
-            //    string pirkinys3 = Console.ReadLine();
-
-            //    // to finish shopping
-            //    if (Console.ReadLine() == "baigta")
-            //    {
-            //        break;
-            //    }
-            //}
         }
         static void uzduotis6()
         {
@@ -2220,7 +356,6 @@ namespace ConsoleAppCA
                 Console.WriteLine(a);
             }
         }
-
         static void uzduotis7()
         {
             Console.WriteLine("nebaigta! go back to menu press 'q': ");
@@ -2271,15 +406,35 @@ namespace ConsoleAppCA
             }
         }
         #endregion
-
         static void uzduotis11()
         {
             while (true)
             {
-                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
-                Console.WriteLine("1. Savaites programa");
-                Console.WriteLine("2. Amziaus programa");
-                Console.WriteLine("3. Menesio programa");
+                while (true)
+                {
+                    Console.Write("Iveskite menesio numeri skaitmenisku pavidalu (1-12) :");
+                    var miau = Console.ReadLine();
+                    if (miau == "q") break;
+                    int miauS = int.Parse(miau);
+
+                    var result = miauS switch
+                    {
+                        1 => "Sausis",
+                        2 => "Vasaris",
+                        3 => "Kovas",
+                        4 => "Balandis",
+                        5 => "Geguze",
+                        6 => "Birzelis",
+                        7 => "Liepa",
+                        8 => "Rugpjutis",
+                        9 => "Rugsejis",
+                        10 => "Spalis",
+                        11 => "Lapkritis",
+                        12 => "Gruodis",
+                        _ => "Menesis neegzistuoja"
+                    };
+                    Console.WriteLine(result);
+                }
                 var ab = Console.ReadLine();
                 if (ab == "q") break;
                 int xb = int.Parse(ab);
@@ -2439,20 +594,289 @@ namespace ConsoleAppCA
                 {
                     while (true)
                     {
-                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        Console.WriteLine("Pasirinkite viena is penkiu pagrindiniu elementu: ");
+                        Console.Write("Ugnis - u, Vanduo - v, Oras - o, Zeme - z, Eteris - e: ");
                         var miau = Console.ReadLine();
                         if (miau == "q") break;
-                        int miauS = int.Parse(miau);
+                        var info = miau switch
+                        {
+                            "u" => "Fire represents light, heat, energy, metabolism, and the power of transformation.",
+                            "v" => "This element fosters modesty and sensibility. " +
+                            "\nWater is associated with wisdom, stamina and endurance.",
+                            "o" => "When we think of air, we often think of communication, breath, and life. " +
+                            "\nLightness, motion, intelligence, knowledge, learning, thinking, imagination, " +
+                            "\ncreativity, harmony, perception, and strategy also represent this element.",
+                            "z" => "The Earth element represents solid matter and the structure of the universe.",
+                            "e" => "Ether is cold because it lacks the warmth of the fire, " +
+                            "\nit is light in weight as it lacks the heaviness of earth and water, " +
+                            "\nand it is immobile as it lacks the mobility and fluid nature of air.",
+                            _ => "Blogas pasirinkimas"
+                        };
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine(info);
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                     }
                 }
-                if (xb == 2)
+                if (xb == 3)
                 {
                     while (true)
                     {
-                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        Console.WriteLine("Atejo metas rinktis studijas! Stai jusu pasirinkimai:");
+                        List<string> studijos = new List<string>() { "Taikomoji Matematika", "Informacines Technologijos", "Mechanine Biologija", "Farmacijos Chemija" };
+
+                        for (int i = 1; i <= studijos.Count; i++) // 1 2 3 4
+                        {
+                            Console.WriteLine(i + ". " + studijos[i - 1]);
+                        }
+
                         var miau = Console.ReadLine();
+
                         if (miau == "q") break;
+
                         int miauS = int.Parse(miau);
+
+                        switch (miauS)
+                        {
+                            case 1:
+
+                                Console.WriteLine("Iveskite keturiu valstybiniu egzaminu rezultatus 100 balu skaleje ir spauskite 'Enter'.");
+                                Console.WriteLine("Reikalingi egzaminai norint studijuoti Taikomaja Matematika: ");
+
+                                // klausimynas egzaminai
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+                                Console.Write("Matematika (0.4 balo) - ");
+                                int mat = int.Parse(Console.ReadLine());
+
+                                Console.Write("Anglu kalba (0.125 balo) - ");
+                                int ang = int.Parse(Console.ReadLine());
+
+                                Console.Write("Lietuviu kalba (0.125 balo) - ");
+                                int ltu = int.Parse(Console.ReadLine());
+
+                                Console.Write("Informatika (0.2 balo) - ");
+                                int itt = int.Parse(Console.ReadLine());
+
+                                Console.Write("Papildomas egzaminas: Fizika (+0.1 balo) - ");
+                                int fiz = int.Parse(Console.ReadLine());
+
+                                Console.Write("Ar esate baiges privalomaja karo tarnyba? (x0.1 balu) y/n : ");
+                                string pow = Console.ReadLine();
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+
+                                // skaiciavimas
+                                double result = mat * 0.4 + ang * 0.15 + ltu * 0.15 + itt * 0.3 + fiz * 0.1;
+
+                                if (pow == "y")
+                                {
+                                    result *= 1.1;
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I TAIKOMOSIOS MATEMATIKOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I TAIKOMOSIOS MATEMATIKOS STUDIJAS!" +
+                                             "Jusu balas yra daugiau nei 100! : " + result + " Sveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+
+                                else if (pow == "n")
+                                {
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I TAIKOMOSIOS MATEMATIKOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I TAIKOMOSIOS MATEMATIKOS STUDIJAS!" +
+                                             "\nJusu balas yra daugiau nei 100! : " + result +
+                                             "\nSveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+                                break;
+
+                            case 2:
+
+                                Console.WriteLine("Iveskite keturiu valstybiniu egzaminu rezultatus 100 balu skaleje ir spauskite 'Enter'.");
+                                Console.WriteLine("Reikalingi egzaminai norint studijuoti Informacines Technologijos: ");
+
+                                // klausimynas egzaminai
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+                                Console.Write("Informatika (0.4 balo) - ");
+                                mat = int.Parse(Console.ReadLine());
+
+                                Console.Write("Anglu kalba (0.125 balo) - ");
+                                ang = int.Parse(Console.ReadLine());
+
+                                Console.Write("Lietuviu kalba (0.125 balo) - ");
+                                ltu = int.Parse(Console.ReadLine());
+
+                                Console.Write("Matematika (0.2 balo) - ");
+                                itt = int.Parse(Console.ReadLine());
+
+                                Console.Write("Papildomas egzaminas: Programavimas (+0.1 balo) - ");
+                                fiz = int.Parse(Console.ReadLine());
+
+                                Console.Write("Ar esate baiges privalomaja karo tarnyba? (x0.1 balu) y/n : ");
+                                pow = Console.ReadLine();
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+
+                                // skaiciavimas
+                                result = mat * 0.4 + ang * 0.15 + ltu * 0.15 + itt * 0.3 + fiz * 0.1;
+
+                                if (pow == "y")
+                                {
+                                    result *= 1.1;
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I IT STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I IT STUDIJAS!" +
+                                             "Jusu balas yra daugiau nei 100! : " + result + " Sveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+
+                                else if (pow == "n")
+                                {
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I IT STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I IT STUDIJAS!" +
+                                             "\nJusu balas yra daugiau nei 100! : " + result +
+                                             "\nSveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+                                break;
+
+                            case 3:
+
+                                Console.WriteLine("Iveskite keturiu valstybiniu egzaminu rezultatus 100 balu skaleje ir spauskite 'Enter'.");
+                                Console.WriteLine("Reikalingi egzaminai norint studijuoti Mechanine Biologija: ");
+
+                                // klausimynas egzaminai
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+                                Console.Write("Biologija (0.4 balo) - ");
+                                mat = int.Parse(Console.ReadLine());
+
+                                Console.Write("Anglu kalba (0.125 balo) - ");
+                                ang = int.Parse(Console.ReadLine());
+
+                                Console.Write("Lietuviu kalba (0.125 balo) - ");
+                                ltu = int.Parse(Console.ReadLine());
+
+                                Console.Write("Chemija (0.2 balo) - ");
+                                itt = int.Parse(Console.ReadLine());
+
+                                Console.Write("Papildomas egzaminas: Informatika (+0.1 balo) - ");
+                                fiz = int.Parse(Console.ReadLine());
+
+                                Console.Write("Ar esate baiges privalomaja karo tarnyba? (x0.1 balu) y/n : ");
+                                pow = Console.ReadLine();
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+
+                                // skaiciavimas
+                                result = mat * 0.4 + ang * 0.15 + ltu * 0.15 + itt * 0.3 + fiz * 0.1;
+
+                                if (pow == "y")
+                                {
+                                    result *= 1.1;
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I MECHANINES BIOLOGIJOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I MECHANINES BIOLOGIJOS STUDIJAS!" +
+                                             "Jusu balas yra daugiau nei 100! : " + result + " Sveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+
+                                else if (pow == "n")
+                                {
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I MECHANINES BIOLOGIJOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I MECHANINES BIOLOGIJOS STUDIJAS!" +
+                                             "\nJusu balas yra daugiau nei 100! : " + result +
+                                             "\nSveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+                                break;
+
+                            case 4:
+
+                                Console.WriteLine("Iveskite keturiu valstybiniu egzaminu rezultatus 100 balu skaleje ir spauskite 'Enter'.");
+                                Console.WriteLine("Reikalingi egzaminai norint studijuoti Farmacijos Chemija: ");
+
+                                // klausimynas egzaminai
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+                                Console.Write("Chemija (0.4 balo) - ");
+                                mat = int.Parse(Console.ReadLine());
+
+                                Console.Write("Biologija (0.2 balo) - ");
+                                itt = int.Parse(Console.ReadLine());
+
+                                Console.Write("Anglu kalba (0.125 balo) - ");
+                                ang = int.Parse(Console.ReadLine());
+
+                                Console.Write("Lietuviu kalba (0.125 balo) - ");
+                                ltu = int.Parse(Console.ReadLine());
+
+                                Console.Write("Papildomas egzaminas: Fizika (+0.1 balo) - ");
+                                fiz = int.Parse(Console.ReadLine());
+
+                                Console.Write("Ar esate baiges privalomaja karo tarnyba? (x0.1 balu) y/n : ");
+                                pow = Console.ReadLine();
+                                Console.WriteLine("----------------------------------------------------------------------------------------");
+
+                                // skaiciavimas
+                                result = mat * 0.4 + ang * 0.15 + ltu * 0.15 + itt * 0.3 + fiz * 0.1;
+
+                                if (pow == "y")
+                                {
+                                    result *= 1.1;
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I FARMACIJOS CHEMIJOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I FARMACIJOS CHEMIJOS STUDIJAS!" +
+                                             "Jusu balas yra daugiau nei 100! : " + result + " Sveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+
+                                else if (pow == "n")
+                                {
+                                    Console.WriteLine(" Jusu stojamasis balas: " + result + ". Reikalingas  balas istoti: 95");
+                                    var svkn = result switch
+                                    {
+                                        < 94 => "Apgailestaujame, taciau jusu stojamasis balas yra per mazas... " + result + "...",
+                                        < 99 => "SEIKINAME ISTOJUS I FARMACIJOS CHEMIJOS STUDIJAS!",
+                                        _ => "SEIKINAME ISTOJUS I FARMACIJOS CHEMIJOS STUDIJAS!" +
+                                             "\nJusu balas yra daugiau nei 100! : " + result +
+                                             "\nSveikiname gavus PREZIDENTO STIPENDIJA!",
+                                    };
+                                    Console.WriteLine(svkn);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                }
+                                break;
+                        }
                     }
                 }
                 else Console.WriteLine("Wrong input!");
@@ -2461,6 +885,146 @@ namespace ConsoleAppCA
             //string pasirinkimas = Console.ReadLine();
 
 
+        }
+        static void uzduotis13()
+        {
+            while (true)
+            {
+                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+                Console.WriteLine("1. Metu sezonu programa");
+                Console.WriteLine("2. Kalkulo programa");
+                Console.WriteLine("3. Valiutu programa");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
+
+                if (xb == 1)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite menesio numeri (1-12) :");
+                        var miau = Console.ReadLine();
+
+                        if (miau == "q") break;
+
+                        int miauS = int.Parse(miau);
+
+                        var result = miauS switch
+                        {
+                            < 3 => "Ziema",
+                            < 6 => "Pavasaris",
+                            < 9 => "Vasara",
+                            < 12 => "Ruduo",
+                            < 13 => "Ziema",
+                            _ => "Menesis neegzistuoja"
+                        };
+                        Console.WriteLine("Metu laikas yra - " + result);
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Pasirinkite viena is matematiniu veiksmu (1-6):");
+                        List<string> funkcijos = new List<string>() { "Sudetis", "Atimtis", "Dalyba", "Daugyba", "Kelimas kvadratu", "Saknies traukimas" };
+
+                        for (int i = 1; i <= funkcijos.Count; i++) // 1 2 3 4
+                        {
+                            Console.WriteLine(i + ". " + funkcijos[i - 1]);
+                        }
+
+                        var miau = Console.ReadLine();
+
+                        if (miau == "q") break;
+
+                        var a1 = Console.ReadLine();
+
+                        if (a1 == "q") break;
+
+                        var b1 = Console.ReadLine();
+
+                        if (b1 == "q") break;
+
+                        int miauS = int.Parse(miau);
+                        int a2 = int.Parse(a1);
+                        int b2 = int.Parse(b1);
+
+                        switch (miauS)
+                        {
+                            case 1:
+                                Console.WriteLine("Rezultatas: " + $"{a1} + {b1} = " + (a2 += b2).ToString());
+                                break;
+                            case 2:
+                                Console.WriteLine("Rezultatas: " + $"{a1} - {b1} = " + (a2 -= b2).ToString());
+                                break;
+                            case 3:
+                                Console.WriteLine("Rezultatas: " + $"{a1} / {b1} = " + (a2 /= b2).ToString());
+                                break;
+                            case 4:
+                                Console.WriteLine("Rezultatas: " + $"{a1} x {b1} = " + (a2 *= b2).ToString());
+                                break;
+                            case 5:
+                                Console.WriteLine("Rezultatas: " + $"{a1}^{b1} = " + (Math.Pow(a2, b2).ToString()));
+                                break;
+                            case 6:
+                                Console.WriteLine("Rezultatas: " + $"{a1} saknis = " + (Math.Sqrt(a2).ToString()));
+                                Console.WriteLine("Rezultatas: " + $"{b1} saknis = " + (Math.Sqrt(b2).ToString()));
+                                break;
+                        }
+                    }
+                }
+                if (xb == 3)
+                {
+                    // reikia pradeti naudoti API ir rasti nemokama currency page kad padaryti dinamiska metoda su naujausiais valiutu kursais
+                    while (true)
+                    {
+                        Console.Write("\nIveskite norima valiuta (USD, EUR, GBP, JPY) : ");
+                        var valiut = Console.ReadLine();
+                        if (valiut == "q") break;
+
+                        Console.Write("Ir suma: ");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        double miauS = int.Parse(miau);
+                        // 1eur: 163.76 JPY, 0.88 GBP, 1.11 USD
+                        // 1gbp: 186.09 JPY, 1.14 EUR, 1.26 USD
+                        // 1jpy: 0.0054 GBP, 0.0061 EUR, 0.0068 USD
+                        // 1usd: 0.90 EUR, 0.79 GBP, 147.53 JPY
+                        switch (valiut)
+                        {
+                            case "USD":
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                Console.WriteLine("Pasirinkta valiuta: " + miau + " " + valiut);
+                                Console.Write(miauS * 0.9 + "EUR, " + miauS * 0.79 + "GBP, " + miauS * 147.53 + "JPY\n");
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                break;
+                            case "EUR":
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                Console.WriteLine("Pasirinkta valiuta: " + miau + " " + valiut);
+                                Console.Write(miauS * 1.11 + "USD, " + miauS * 0.88 + "GBP, " + miauS * 163.76 + "JPY\n");
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                break;
+                            case "GBP":
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                Console.WriteLine("Pasirinkta valiuta: " + miau + " " + valiut);
+                                Console.Write(miauS * 1.14 + "EUR, " + miauS * 1.26 + "USD, " + miauS * 186.09 + "JPY\n");
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                break;
+                            case "JPY":
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                Console.WriteLine("Pasirinkta valiuta: " + miau + " " + valiut);
+                                Console.Write(miauS * 0.0061 + "EUR, " + miauS * 0.0054 + "GBP, " + miauS * 0.0068 + "USD\n");
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                break;
+                            default:
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                Console.WriteLine("-------------------------WRONG-----------------------------------");
+                                Console.WriteLine("-----------------------------------------------------------------");
+                                break;
+                        }
+                    }
+                }
+            }
         }
         //static void pavyzdys()
         //{
