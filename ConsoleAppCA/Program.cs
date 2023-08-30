@@ -20,105 +20,133 @@ namespace ConsoleAppCA
             {
 
                 //Console.WriteLine("Issirinkite uzduoti nuo 1 iki 10: ");
-                Console.WriteLine("Issirinkite uzduoti nuo 1 iki 12: ");
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=TEMOS=-=-=-=-=-=-=-=-=-=-=-=-=");
+                Console.WriteLine("1. System.String");
+                Console.WriteLine("2. Conditionals - If");
+                Console.WriteLine("3. Switch Case");
+                Console.WriteLine("4. String Manipuliacija");
+                Console.WriteLine("5. ...");
+                Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 string slct = Console.ReadLine();
 
-                //try
-                //{
-                //    slct = Int32.Parse(Console.ReadLine());
-                //}
-                //catch
-                //{
-                //    Console.WriteLine("Wrong Selection! ");
-
-                //    if(slct.ToString() == "projektas")
-                //    {
-                //        Console.Write("do you want to open IF PROJECT? y/n: ");
-                //        string selection = Console.ReadLine();
-
-                //        if (selection == "y")
-                //        {
-                //            projektas();
-                //        }
-
-                //        else if (selection == "n")
-                //        {
-                //            Console.WriteLine("bye bye");
-                //            navigacija();
-                //        }
-                //    }
-                //}
                 switch (slct)
                 {
                     case "1":
-                        uzduotis1();
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=NERA!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        navigacija();
                         break;
 
                     case "2":
-                        uzduotis2();
-                        break;
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 1 IKI 10 ARBA PROJEKTAS");
+                        slct = Console.ReadLine();
+                        switch (slct)
+                        {
+                            case "1":
+                                uzduotis1();
+                                break;
 
+                            case "2":
+                                uzduotis2();
+                                break;
+
+                            case "3":
+                                uzduotis3();
+                                break;
+
+                            case "4":
+                                uzduotis4();
+                                break;
+
+                            case "5":
+                                uzduotis5();
+                                break;
+
+                            case "6":
+                                uzduotis6();
+                                break;
+
+                            case "7":
+                                uzduotis7();
+                                break;
+
+                            case "8":
+                                uzduotis8();
+                                break;
+
+                            case "9":
+                                uzduotis9();
+                                break;
+
+                            case "10":
+                                uzduotis10();
+                                break;
+
+                            case "projektas":
+                                projektas();
+                                break;
+                            default:
+                                Console.WriteLine("blogas pasirinkimas");
+                                break;
+                        }
+                        break;
                     case "3":
-                        uzduotis3();
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 11 IKI 13 ARBA PROJEKTAS");
+                        slct = Console.ReadLine();
+                        switch (slct)
+                        {
+                            case "11":
+                                uzduotis11();
+                                break;
+                            case "12":
+                                uzduotis12();
+                                break;
+                            case "13":
+                                uzduotis13();
+                                break;
+                            default:
+                                Console.WriteLine("blogas pasirinkimas");
+                                break;
+                        }
                         break;
-
                     case "4":
-                        uzduotis4();
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 14 IKI 17 ARBA PROJEKTAS");
+                        slct = Console.ReadLine();
+                        switch (slct)
+                        {
+                            case "14":
+                                uzduotis14();
+                                break;
+                            case "15":
+                                uzduotis15();
+                                break;
+                            case "16":
+                                uzduotis16();
+                                break;
+                            case "17":
+                                uzduotis17();
+                                break;
+                            default:
+                                Console.WriteLine("blogas pasirinkimas");
+                                break;
+                        }
                         break;
-
                     case "5":
-                        uzduotis5();
                         break;
-
                     case "6":
-                        uzduotis6();
                         break;
-
                     case "7":
-                        uzduotis7();
                         break;
-
                     case "8":
-                        uzduotis8();
                         break;
-
-                    case "9":
-                        uzduotis9();
-                        break;
-
-                    case "10":
-                        uzduotis10();
-                        break;
-
-                    case "projektas":
-                        projektas();
-                        break;
-                    case "11":
-                        uzduotis11();
-                        break;
-                    case "12":
-                        uzduotis12();
-                        break;
-                    case "13":
-                        uzduotis13();
-                        break;
-
                     default:
                         Console.WriteLine("blogas pasirinkimas");
                         break;
                 }
-
-                //if (slct == 1) uzduotis1();
-                //else if (slct == 2) uzduotis2();
-                //else if (slct == 3) uzduotis3();
-                //else if (slct == 4) uzduotis4();
-                //else if (slct == 5) uzduotis5();
-                //else if (slct == 6) uzduotis6();
-                //else if (slct == 7) uzduotis7();
-                //else if (slct == 8) uzduotis8();
-                //else if (slct == 9) uzduotis9();
-                //else if (slct == 10) uzduotis10();
-                //else if (slct > 10) Console.WriteLine("Wong Selection!");
             }
         }
         #region IfStatementUzduotys
@@ -406,6 +434,7 @@ namespace ConsoleAppCA
             }
         }
         #endregion
+        #region SwitchUzduotys
         static void uzduotis11()
         {
             while (true)
@@ -1026,6 +1055,102 @@ namespace ConsoleAppCA
                 }
             }
         }
+        #endregion
+        #region StringManipuliacijosUzduotys
+        static void uzduotis14()
+        {
+            Console.WriteLine("Iveskite betkoki teksta: ");
+            string slct = Console.ReadLine();
+            char[] slct2 = slct.ToCharArray();
+
+            string raide = slct2[0].ToString().ToUpper();
+            slct = slct.Replace(slct[0], raide[0]);
+            Console.WriteLine(slct);
+        }
+        static void uzduotis15()
+        {
+            while (true)
+            {
+                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+                Console.WriteLine("1. Sakinio programa");
+                Console.WriteLine("2. Zodziu keitimo programa");
+                Console.WriteLine("3. Iki 90-ies programa");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
+
+                if (xb == 1)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite pora sakiniu: ");
+                        string slct = Console.ReadLine();
+                        if (slct == "q") break;
+
+                        //slct.Replace('a', 'u'+'o');
+                        //char[] slct2 = slct.ToCharArray();
+                        string slct2 = "";
+
+                        foreach (char c in slct)
+                        {
+                            if (c == 'a')
+                            {
+                                slct2 += "uo";
+                            }
+                            else if (c.Equals('i'))
+                            {
+                                slct2 += "e";
+                            }
+                            else
+                            {
+                                slct2 += c;
+                            }
+                        }
+
+                        Console.WriteLine($"Old sentence: {slct}");
+                        Console.WriteLine($"New sentence: {slct2}");
+                    }
+                }
+
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.WriteLine("Iveskite eilerasti ar dainos zodzius: ");
+                        string slct = Console.ReadLine();
+
+                        if (slct == "q") break;
+
+                        Console.WriteLine("Koki zodi noretumete pakeisti kitu zodziu?");
+
+                        Console.Write("Zodis is teksto: ");
+                        string a1 = Console.ReadLine();
+
+                        Console.Write("Zodis kuriuo keisime: ");
+                        string a2 = Console.ReadLine();
+
+                    }
+                }
+
+                if (xb == 3)
+                {
+                    while (true)
+                    {
+
+                    }
+                }
+
+            }
+        }
+        static void uzduotis16()
+        {
+
+        }
+        static void uzduotis17()
+        {
+
+        }
+        #endregion
         //static void pavyzdys()
         //{
         //    while (true)
@@ -1072,3 +1197,4 @@ namespace ConsoleAppCA
         //}
     }
 }
+
