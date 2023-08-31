@@ -115,7 +115,7 @@ namespace ConsoleAppCA
                         break;
                     case "4":
                         Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 14 IKI 17 ARBA PROJEKTAS");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 14 IKI 19 ARBA PROJEKTAS");
                         slct = Console.ReadLine();
                         switch (slct)
                         {
@@ -130,6 +130,15 @@ namespace ConsoleAppCA
                                 break;
                             case "17":
                                 uzduotis17();
+                                break;
+                            case "18":
+                                uzduotis18();
+                                break;
+                            case "19":
+                                uzduotis19();
+                                break;
+                            case "projektas":
+                                projektasSM();
                                 break;
                             default:
                                 Console.WriteLine("blogas pasirinkimas");
@@ -1309,63 +1318,324 @@ namespace ConsoleAppCA
                 {
                     while (true)
                     {
-                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
-                        var miau = Console.ReadLine();
+                        Console.Write("Type a greeting in any language: ");
+                        string miau = Console.ReadLine();
                         if (miau == "q") break;
-                        int miauS = int.Parse(miau);
+
+                        bool ltu = (miau == "labas");
+                        char[] ble = miau.ToCharArray();
+                        string aba = new string(miau.Reverse().ToArray());
+                        if (!ltu) Console.WriteLine($"{miau}, back to you!");
+                        if (ltu) Console.WriteLine($"Great, you know a bit Lithuanian! Here's a reversed greeting to you as a bonus: '{aba}'");
+
+                        /* Galima butu gauti paskutini char indexa ir pati char to zodzio, tada prideti prie pradzios ta char paskutini ir nuimti nuo galo, ir sukti while loop iki kol paskutinis char bus lygus*/
                     }
                 }
             }
         }
         static void uzduotis17()
         {
+            while (true)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("------------------------Welcome to SUBWAY!---------------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("Here's the recipe for greatest subway sandwich!: ");
+                Console.WriteLine("1. Bread");
+                Console.WriteLine("2. Meat");
+                Console.WriteLine("3. Cheese");
+                Console.WriteLine("4. Mini veggies");
+                Console.WriteLine("5. Veggies");
+                Console.WriteLine("6. Spiciness");
+                Console.WriteLine("7. Sauce");
+                Console.WriteLine("8. Size");
+                Console.WriteLine("---------------------------------------------------------------------------");
+
+                string ab1;
+                int ab2;
+                // 1 pasirinkimas
+                Console.WriteLine("Choose the bread: ");
+
+                Console.WriteLine("1. Grainy");
+                Console.WriteLine("2. With cheese");
+                Console.WriteLine("3. Plain");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] bread = ab2 switch
+                {
+                    1 => new[] { "Grainy", "2" },
+                    2 => new[] { "Cheesy", "2.2" },
+                    3 => new[] { "Plain", "1.5" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 2 pasirinkimas
+                Console.WriteLine("Choose the Meat: ");
+
+                Console.WriteLine("1. Saliami");
+                Console.WriteLine("2. Bacon");
+                Console.WriteLine("3. No meat");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] meat = ab2 switch
+                {
+                    1 => new[] { "Saliami", "2" },
+                    2 => new[] { "Bacon", "2.2" },
+                    3 => new[] { "No meat", "0" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 3 pasirinkimas
+                Console.WriteLine("Choose the Cheese: ");
+
+                Console.WriteLine("1. Feta");
+                Console.WriteLine("2. Parmezan");
+                Console.WriteLine("3. No cheese");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] cheese = ab2 switch
+                {
+                    1 => new[] { "Feta", "2" },
+                    2 => new[] { "Parmezan", "2.2" },
+                    3 => new[] { "No cheese", "0" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 4 pasirinkimas
+                Console.WriteLine("Choose the Mini veggies: ");
+
+                Console.WriteLine("1. Corn");
+                Console.WriteLine("2. Pea");
+                Console.WriteLine("3. Nothing");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] veggies = ab2 switch
+                {
+                    1 => new[] { "Corn", "2" },
+                    2 => new[] { "Pea", "2.2" },
+                    3 => new[] { "Nothing", "0" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 5 pasirinkimas
+                Console.WriteLine("Choose the Veggies: ");
+
+                Console.WriteLine("1. Tomato");
+                Console.WriteLine("2. Pickle");
+                Console.WriteLine("3. Both");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] veg = ab2 switch
+                {
+                    1 => new[] { "Tomato", "2" },
+                    2 => new[] { "Pickle", "2.2" },
+                    3 => new[] { "Both", "4" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 6 pasirinkimas
+                Console.WriteLine("Choose the Spiciness: ");
+
+                Console.WriteLine("1. *");
+                Console.WriteLine("2. **");
+                Console.WriteLine("3. Not Spicy");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] spicy = ab2 switch
+                {
+                    1 => new[] { "*", "2" },
+                    2 => new[] { "**", "2.2" },
+                    3 => new[] { "Not Spicy", "0" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 7 pasirinkimas
+                Console.WriteLine("Choose the Sauce: ");
+
+                Console.WriteLine("1. Burger");
+                Console.WriteLine("2. Garlic");
+                Console.WriteLine("3. No sauce");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] sauce = ab2 switch
+                {
+                    1 => new[] { "Burger", "2" },
+                    2 => new[] { "Garlic", "2.2" },
+                    3 => new[] { "No sauce", "0" },
+                    _ => new[] { "Wrong!", "0" }
+                };
+                // 8 pasirinkimas
+                Console.WriteLine("Choose the Size: ");
+
+                Console.WriteLine("1. Medium");
+                Console.WriteLine("2. Large");
+                Console.WriteLine("3. Extra Large");
+
+                ab1 = Console.ReadLine();
+                if (ab1 == "q") break;
+                ab2 = int.Parse(ab1);
+                string[] size = ab2 switch
+                {
+                    1 => new[] { "Medium", "1" },
+                    2 => new[] { "Large", "1.5" },
+                    3 => new[] { "Extra Large", "2.5" },
+                    _ => new[] { "Wrong", "0" }
+                };
+
+                Console.WriteLine($"Your choice: {bread[0]} {bread[1]}$, {meat[0]} {meat[1]}$, {cheese[0]} {cheese[1]}$, {veggies[0]} {veggies[1]}$, {veg[0]} {veg[1]}$, {spicy[0]} {spicy[1]}$, {sauce[0]} {sauce[1]}$, {size[0]} {size[1]}$.");
+                double total = double.Parse(bread[1]) + double.Parse(meat[1]) + double.Parse(cheese[1]) + double.Parse(veggies[1]) + double.Parse(veg[1]) + double.Parse(spicy[1]) + double.Parse(sauce[1]) + double.Parse(size[1]);
+                Console.WriteLine("Total for you awesombazinga SUBWWAY sandwich: " + total + " shillings! Enjoy your long burgir!");
+                Console.Read();
+            }
+        }
+
+        static void uzduotis18()
+        {
+            while (true)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("------------------------TELEPHONE COST APP---------------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("Choose country to preselect the code: ");
+                Console.Write("\"LT\", \"LV\", \"EE\", \"DK\", \"DE\", \"UK\", \"USA\", \"NO\", \"FI\", \"FR\", \"AL\", \"MD\", \"JPN\", \"PL\", \"SYR\" :");
+                string miau = Console.ReadLine().ToUpper();
+                if (miau == "Q") break;
+
+                string[] code = miau switch
+                {
+                    "LT" => new[] { "+370", "Lithuania" },
+                    "LV" => new[] { "+371", "Latvia" },
+                    "EE" => new[] { "+372", "Estonia" },
+                    "DK" => new[] { "+49", "Denamrk" },
+                    "DE" => new[] { "+45", "Germany" },
+                    "UK" => new[] { "+44", "United Kingdom" },
+                    "USA" => new[] { "+1", "Shtatai" },
+                    "NO" => new[] { "+47", "Norway" },
+                    "FI" => new[] { "+358", "Finland" },
+                    "FR" => new[] { "+33", "France" },
+                    "AL" => new[] { "+355", "Albania" },
+                    "MD" => new[] { "+373", "Moldova" },
+                    "JPN" => new[] { "+81", "Japan" },
+                    "PL" => new[] { "+48", "Poland" },
+                    "SYR" => new[] { "+963", "Syria" },
+                    _ => new[] { "Wrong!", "Country!" }
+                };
+
+                Console.Write("How many minutes you're going to talk?: ");
+                int min = int.Parse(Console.ReadLine());
+                Console.Write("Enter your selected country number: " + code[1] + " " + code[0]);
+                string phone = Console.ReadLine().ToString().Split('+')[0];
+
+                phone = code[0] + phone;
+                double kaina = 0.08;
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("Bite");
+                Console.WriteLine("Telefono numeris: " + phone);
+                Console.WriteLine("Skambucio laikas: " + kaina + "/min");
+                Console.WriteLine("Galutine skambucio kaina: " + (kaina * min));
+                Console.WriteLine("---------------------------------------------------------------------------");
+
+
+            }
+        }
+        static void uzduotis19()
+        {
+            while (true)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("------------------------TIKROJI MEILES SISTEMA-----------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("Noredami suzinoti dvieju zmoniu tinkamuma vienas ktiam iveskite du vardus:");
+                string v1 = Console.ReadLine();
+                if (v1 == "q") break;
+                string v2 = Console.ReadLine();
+                if (v2 == "q") break;
+
+                int v11 = 0;
+                int v22 = 0;
+                string txt = "tikroji meile";
+
+                for (int i = 0; i <= v1.Length; i++)
+                {
+                    if (txt.Contains(v1[i]))
+                    {
+                        Console.WriteLine(v1[i]);
+                        v11 += txt.Count(o => o == v1[i]);
+
+                    }
+                    i++;
+                }
+
+                for (int i = 0; i <= v2.Length; i++)
+                {
+                    if (txt.Contains(v2[i]))
+                    {
+                        v22 += txt.Count(o => o == v2[i]);
+                    }
+                    i++;
+                }
+
+                Console.WriteLine($"Tekste 'txt'  vardu raides kartojasi: {v1} - {v11} ir {v2} - {v22}");
+            }
+        }
+        static void projektasSM()
+        {
 
         }
-        #endregion
-        //static void pavyzdys()
-        //{
-        //    while (true)
-        //    {
-        //        Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
-        //        Console.WriteLine("1. Geometriniu figuru programa");
-        //        Console.WriteLine("2. Pagrindiniu elementu programa");
-        //        Console.WriteLine("3. Universitetu specialybiu programa");
-        //        var ab = Console.ReadLine();
-        //        if (ab == "q") break;
-        //        int xb = int.Parse(ab);
-
-        //        if (xb == 1)
-        //        {
-        //            while (true)
-        //            {
-        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
-        //                var miau = Console.ReadLine();
-        //                if (miau == "q") break;
-        //                int miauS = int.Parse(miau);
-        //            }
-        //        }
-        //        if (xb == 2)
-        //        {
-        //            while (true)
-        //            {
-        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
-        //                var miau = Console.ReadLine();
-        //                if (miau == "q") break;
-        //                int miauS = int.Parse(miau);
-        //            }
-        //        }
-        //        if (xb == 2)
-        //        {
-        //            while (true)
-        //            {
-        //                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
-        //                var miau = Console.ReadLine();
-        //                if (miau == "q") break;
-        //                int miauS = int.Parse(miau);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }
+#endregion
+//static void pavyzdys()
+//{
+//    while (true)
+//    {
+//        Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+//        Console.WriteLine("1. Geometriniu figuru programa");
+//        Console.WriteLine("2. Pagrindiniu elementu programa");
+//        Console.WriteLine("3. Universitetu specialybiu programa");
+//        var ab = Console.ReadLine();
+//        if (ab == "q") break;
+//        int xb = int.Parse(ab);
+
+//        if (xb == 1)
+//        {
+//            while (true)
+//            {
+//                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+//                var miau = Console.ReadLine();
+//                if (miau == "q") break;
+//                int miauS = int.Parse(miau);
+//            }
+//        }
+//        if (xb == 2)
+//        {
+//            while (true)
+//            {
+//                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+//                var miau = Console.ReadLine();
+//                if (miau == "q") break;
+//                int miauS = int.Parse(miau);
+//            }
+//        }
+//        if (xb == 2)
+//        {
+//            while (true)
+//            {
+//                Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+//                var miau = Console.ReadLine();
+//                if (miau == "q") break;
+//                int miauS = int.Parse(miau);
+//            }
+//        }
+//    }
+//}
+
 
