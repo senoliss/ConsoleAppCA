@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Threading.Channels;
 using System.Net.Http;
+using System.Runtime.Intrinsics.X86;
 
 namespace ConsoleAppCA
 {
@@ -1090,22 +1091,23 @@ namespace ConsoleAppCA
                         //slct.Replace('a', 'u'+'o');
                         //char[] slct2 = slct.ToCharArray();
                         string slct2 = "";
-
-                        foreach (char c in slct)
-                        {
-                            if (c == 'a')
-                            {
-                                slct2 += "uo";
-                            }
-                            else if (c.Equals('i'))
-                            {
-                                slct2 += "e";
-                            }
-                            else
-                            {
-                                slct2 += c;
-                            }
-                        }
+                        slct2 = slct.Replace("a", "uo").Replace("i", "e");
+                        Console.WriteLine(slct2);
+                        //foreach (char c in slct)
+                        //{
+                        //    if (c == 'a')
+                        //    {
+                        //        slct2 += "uo";
+                        //    }
+                        //    else if (c.Equals('i'))
+                        //    {
+                        //        slct2 += "e";
+                        //    }
+                        //    else
+                        //    {
+                        //        slct2 += c;
+                        //    }
+                        //}
 
                         Console.WriteLine($"Old sentence: {slct}");
                         Console.WriteLine($"New sentence: {slct2}");
@@ -1116,11 +1118,13 @@ namespace ConsoleAppCA
                 {
                     while (true)
                     {
+                        Console.WriteLine("---------------------------------------------------------------------------");
                         Console.WriteLine("Iveskite eilerasti ar dainos zodzius: ");
                         string slct = Console.ReadLine();
 
                         if (slct == "q") break;
 
+                        Console.WriteLine("---------------------------------------------------------------------------");
                         Console.WriteLine("Koki zodi noretumete pakeisti kitu zodziu?");
 
                         Console.Write("Zodis is teksto: ");
@@ -1129,6 +1133,9 @@ namespace ConsoleAppCA
                         Console.Write("Zodis kuriuo keisime: ");
                         string a2 = Console.ReadLine();
 
+                        Console.WriteLine("---------------------------------------------------------------------------");
+                        Console.WriteLine(slct.Replace(a1, a2));
+                        Console.WriteLine("---------------------------------------------------------------------------");
                     }
                 }
 
@@ -1136,7 +1143,65 @@ namespace ConsoleAppCA
                 {
                     while (true)
                     {
+                        Console.WriteLine("Iveskite savo gimimo data (YYYY-MM-DD): ");
+                        string gimt = Console.ReadLine();
+                        Console.WriteLine("Iveskite savo amziu (XX): ");
+                        string metai = Console.ReadLine();
+                        Console.WriteLine("Iveskite siandienos data (YYYY-MM-DD): ");
+                        string snd = Console.ReadLine();
 
+                        int yrs = 90;
+                        int months = yrs * 12;
+                        int weeks = yrs * 52;
+                        int days = Convert.ToInt32(yrs * 365.25);
+
+                        int gimtY = Convert.ToInt32(gimt.Split("-")[0]);
+                        int gimtM = Convert.ToInt32(gimt.Split("-")[1]);
+                        int gimtD = Convert.ToInt32(gimt.Split("-")[2]);
+
+                        int sndY = Convert.ToInt32(snd.Split("-")[0]);
+                        int sndM = Convert.ToInt32(snd.Split("-")[1]);
+                        int sndD = Convert.ToInt32(snd.Split("-")[2]);
+
+                        int yrs1 = yrs - int.Parse(metai);
+                        int months1 = (yrs * 12) - (int.Parse(metai) * 12);
+                        int weeks1 = (yrs * 52) - (int.Parse(metai) * 12);
+                        int days1 = 365 - ((sndM * 30 + sndD) - (gimtM * 30 + gimtD)); // it calculates days untill next birthay at todays date 08-30 || (365 - ((8 * 30 + 30) - (7 * 30 + 6)) = 365 - (270 - 216) = 365 - 54 = 311days
+
+                        Console.WriteLine("---------------------------------------------------------------------------");
+                        Console.WriteLine($"Iki 90-ies metu jums liko gyventi: {yrs1} metu arba {months1} menesiu arba {weeks1} savaiciu arba {days1} dienu");
+                        Console.WriteLine("---------------------------------------------------------------------------");
+                        #region TryingToCalculateLeftTime
+                        //int remainingYears = yrs - int.Parse(metai); // 90 - 24 = 66
+                        int leftM = 0;
+                        int leftW = 0;
+                        int leftD = 0;
+
+                        while (yrs1 > 0)                        // 66
+                        {
+                            if (yrs1 >= 1)
+                            {
+                                yrs1--;                         //65
+                            }
+                            else if (leftM >= 12)
+                            {
+                                yrs1++;
+                                leftM -= 12;
+                            }
+                            else if (leftW >= 52)
+                            {
+                                leftM++;
+                                leftW -= 52;
+                            }
+                            else
+                            {
+                                leftW++;
+                                leftD -= 7;
+                            }
+                        }
+
+                        Console.WriteLine($"You have approximately {yrs1} years, {leftM} months, {leftW} weeks, and {leftD} days until you're 90 years old.");
+                        #endregion
                     }
                 }
 
@@ -1144,7 +1209,113 @@ namespace ConsoleAppCA
         }
         static void uzduotis16()
         {
+            while (true)
+            {
+                Console.WriteLine("Choose which program you'd like to use: ");
+                Console.WriteLine("1. Word check program");
+                Console.WriteLine("2. Symbol check program");
+                Console.WriteLine("3. 'labas' check program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                if (xb == 1)
+                {
+                    while (true)
+                    {
+                        Console.Write("Type a word:");
+                        string word = Console.ReadLine();
+                        if (word == "q") break;
+
+                        char bl = word[0];
+                        bool isUpper = Char.IsUpper(bl);
+                        bool isLetter = Char.IsLetter(bl);
+                        string newWordL = word.Replace(word[0], Char.ToUpper(word[0]));
+                        string newWordU = word.ToUpper();
+
+                        if (isUpper && isLetter)
+                        {
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                            Console.WriteLine($"Word: {word} started with first uppercase letter, so it is changed to: {newWordU}");
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                        }
+                        else if (!isUpper && isLetter)
+                        {
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                            Console.WriteLine($"Word: {word} started with first lowercase letter, so it is changed to: {newWordL}");
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                        }
+                        else
+                        {
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                            Console.WriteLine($"First char: {bl} of a word: {word}, was not a letter! ERROR!");
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                        }
+
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Type a word:");
+                        string miau = Console.ReadLine();
+                        if (miau == "q") break;
+
+                        Console.Write("Select a char:");
+                        char boo = char.Parse(Console.ReadLine());
+                        if (boo == 'q') break;
+
+                        bool exists = miau.Contains(boo);
+                        int times = 0;
+
+                        string indexes = "";
+
+                        if (exists)
+                        {
+                            if (miau.Count(o => o == boo) > 1)
+                            {
+                                for (int i = 0; i < miau.Length; i++)
+                                {
+                                    if (miau[i] == boo)
+                                    {
+                                        times++;
+                                        indexes += $"{i}, ";
+                                    }
+                                }
+                                //indexes = indexes.Remove(indexes[indexes.LastIndexOf(',')]);
+                                indexes = indexes.Trim().Trim(',') + ".";
+                                Console.WriteLine("---------------------------------------------------------------------------");
+                                Console.WriteLine($"Word: {miau} contains characters '{boo}' and their indexes are: {indexes}");
+                                Console.WriteLine("---------------------------------------------------------------------------");
+                            }
+
+                            if (miau.Count(o => o == 'a') < 2)
+                            {
+                                Console.WriteLine("---------------------------------------------------------------------------");
+                                Console.WriteLine($"Word: {miau} contains character '{boo}' and it's index is: {miau.IndexOf('a')}");
+                                Console.WriteLine("---------------------------------------------------------------------------");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                            Console.WriteLine($"Word: {miau}  does not contain character '{boo}'!");
+                            Console.WriteLine("---------------------------------------------------------------------------");
+                        }
+                    }
+                }
+                if (xb == 3)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                }
+            }
         }
         static void uzduotis17()
         {
