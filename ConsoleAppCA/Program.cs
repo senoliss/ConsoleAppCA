@@ -1638,8 +1638,86 @@ namespace ConsoleAppCA
         }
         static void uzduotis20()
         {
+            while (true)
+            {
+                Console.WriteLine("Pasirinkite kuria programa norite naudoti: ");
+                Console.WriteLine("1. First while cycle task");
+                Console.WriteLine("2. Second while cycle task");
+                Console.WriteLine("3. Third while cycle task");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                int a = 1;
+                int b = 5;
+
+                if (xb == 1)
+                {
+                    while (a != 6)
+                    {
+                        Console.Write(a + " - ");
+                        a++;
+                    }
+                    a--;
+                    Console.WriteLine();
+                    while (a >= 1)
+                    {
+                        Console.Write(a + " - ");
+                        a--;
+                    }
+                    Console.WriteLine();
+                }
+
+                if (xb == 2)
+                {
+                    Console.WriteLine("----------------------------------------");
+                    Console.WriteLine("Lyginiu ciklas: ");
+                    while (a != 11)
+                    {
+                        if (a % 2 == 0)
+                        {
+                            Console.Write(a + ", ");
+                        }
+                        a++;
+                    }
+                    Console.WriteLine("\n----------------------------------------");
+                    Console.WriteLine("Nelyginiu ciklas: ");
+                    a = 1;
+                    while (a != 10)
+                    {
+                        if (a % 2 != 0)
+                        {
+                            Console.Write(a + ", ");
+                        }
+                        a++;
+                    }
+                    Console.WriteLine("\n----------------------------------------");
+                }
+
+                if (xb == 3)
+                {
+                    Console.Write("Iveskite skaiciu:");
+                    int s = int.Parse(Console.ReadLine());
+                    while (s < 100)
+                    {
+                        Console.WriteLine("Skaicius neteisingas! ");
+                        Console.Write("Iveskite skaiciu vel:");
+                        s = int.Parse(Console.ReadLine());
+                    }
+                    Console.WriteLine($"Congratz, you've entered correct number! Equal or more than 100 : '{s}'");
+                    Console.Write("On to the next loop! Enter anotha numba: ");
+                    s = int.Parse(Console.ReadLine());
+                    while (s % 2 != 0)
+                    {
+                        Console.WriteLine("Bad number! ");
+                        Console.Write("Type another one:");
+                        s = int.Parse(Console.ReadLine());
+                    }
+                    Console.WriteLine($"Congratz, you've entered correct number! Number dividable by two: '{s}'");
+                }
+            }
         }
+
         static void uzduotis21()
         {
 
