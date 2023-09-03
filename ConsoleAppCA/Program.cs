@@ -1720,7 +1720,59 @@ namespace ConsoleAppCA
 
         static void uzduotis21()
         {
+            while (true)
+            {
+                Console.WriteLine("Choose an app: ");
+                Console.WriteLine("1. Factorial program");                  // i don't get it how to do tas 2.1 https://codeacademylt.sharepoint.com/:p:/r/sites/NETUA2/_layouts/15/Doc.aspx?sourcedoc=%7BDE28CB40-BE61-4AEB-9554-1986E003339E%7D&file=06.%20While.pptx&action=edit&mobileredirect=true
+                Console.WriteLine("2. Number splitter program");
+                Console.WriteLine("3. Fancy 'half of a xmas tree' program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                if (xb == 1)
+                {
+                    Console.Write("\nChoose a number to see it's factortial function: ");
+                    var miau = Console.ReadLine();
+                    if (miau == "q") break;
+                    int miauS = int.Parse(miau);
+                    int b = miauS;
+
+                    while (miauS > 0)
+                    {
+                        while (b > 1)
+                        {
+                            Console.Write(miauS + " - ");
+                            b--;
+                            miauS *= b;
+                        }
+                        Console.Write("\nChoose a number to see it's factortial function: ");
+                        miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        miauS = int.Parse(miau);
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                }
+            }
         }
         static void uzduotis22()
         {
