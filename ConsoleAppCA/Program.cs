@@ -26,7 +26,8 @@ namespace ConsoleAppCA
                 Console.WriteLine("2. Conditionals - If");
                 Console.WriteLine("3. Switch Case");
                 Console.WriteLine("4. String Manipuliacija");
-                Console.WriteLine("5. ...");
+                Console.WriteLine("5. Ciklai - While");
+                Console.WriteLine("6. ...");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 string slct = Console.ReadLine();
 
@@ -146,12 +147,51 @@ namespace ConsoleAppCA
                         }
                         break;
                     case "5":
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 20 IKI 24 ARBA PROJEKTAS");
+                        slct = Console.ReadLine();
+                        switch (slct)
+                        {
+                            case "20":
+                                uzduotis20();
+                                break;
+                            case "21":
+                                uzduotis21();
+                                break;
+                            case "22":
+                                uzduotis22();
+                                break;
+                            case "23":
+                                uzduotis23();
+                                break;
+                            case "24":
+                                uzduotis24();
+                                break;
+                            case "projektas":
+                                projektasWhile();
+                                break;
+                            default:
+                                Console.WriteLine("blogas pasirinkimas");
+                                break;
+                        }
                         break;
                     case "6":
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=NERA!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        navigacija();
                         break;
                     case "7":
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=NERA!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        navigacija();
                         break;
                     case "8":
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=NERA!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        navigacija();
                         break;
                     default:
                         Console.WriteLine("blogas pasirinkimas");
@@ -1554,39 +1594,69 @@ namespace ConsoleAppCA
                 Console.WriteLine("------------------------TIKROJI MEILES SISTEMA-----------------------------");
                 Console.WriteLine("---------------------------------------------------------------------------");
                 Console.WriteLine("Noredami suzinoti dvieju zmoniu tinkamuma vienas ktiam iveskite du vardus:");
-                string v1 = Console.ReadLine();
+                string v1 = Console.ReadLine().ToLower();
                 if (v1 == "q") break;
-                string v2 = Console.ReadLine();
+                string v2 = Console.ReadLine().ToLower();
                 if (v2 == "q") break;
 
                 int v11 = 0;
                 int v22 = 0;
-                string txt = "tikroji meile";
+                string txt = "tikros meiles sistema";
 
-                for (int i = 0; i <= v1.Length; i++)
+                for (int i = 0; i <= v1.Length - 1; i++)
                 {
                     if (txt.Contains(v1[i]))
                     {
-                        Console.WriteLine(v1[i]);
+                        //Console.WriteLine(v1[i]);
                         v11 += txt.Count(o => o == v1[i]);
-
                     }
-                    i++;
                 }
 
-                for (int i = 0; i <= v2.Length; i++)
+                for (int i = 0; i <= v2.Length - 1; i++)
                 {
                     if (txt.Contains(v2[i]))
                     {
                         v22 += txt.Count(o => o == v2[i]);
                     }
-                    i++;
                 }
-
-                Console.WriteLine($"Tekste 'txt'  vardu raides kartojasi: {v1} - {v11} ir {v2} - {v22}");
+                string tinkamumas = v11.ToString() + v22.ToString();
+                string kiekTink = int.Parse(tinkamumas) switch
+                {
+                    < 55 => "Vienas kitam tinkate.",
+                    < 89 => "Vienas kitam puikiai tinkate!",
+                    > 90 => "Idealu!",
+                    _ => "Neapskaiciuota.."
+                };
+                v1 = v1.Replace(v1[0], Char.ToUpper(v1[0]));
+                v2 = v2.Replace(v2[0], Char.ToUpper(v2[0]));
+                Console.WriteLine($"Tekste '{txt}' vardu raides kartojasi: {v1} - {v11} ir {v2} - {v22}, jusu tinkamumas: " + tinkamumas + ", " + kiekTink);
             }
         }
         static void projektasSM()
+        {
+
+        }
+        static void uzduotis20()
+        {
+
+        }
+        static void uzduotis21()
+        {
+
+        }
+        static void uzduotis22()
+        {
+
+        }
+        static void uzduotis23()
+        {
+
+        }
+        static void uzduotis24()
+        {
+
+        }
+        static void projektasWhile()
         {
 
         }
