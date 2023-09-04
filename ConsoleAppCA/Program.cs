@@ -1738,53 +1738,363 @@ namespace ConsoleAppCA
                     int miauS = int.Parse(miau);
                     int b = miauS;
 
-                    while (miauS > 0)
+                    while (true)
                     {
+                        Console.WriteLine("----------------------------------------");
                         while (b > 1)
                         {
                             Console.Write(miauS + " - ");
                             b--;
                             miauS *= b;
                         }
-                        Console.Write("\nChoose a number to see it's factortial function: ");
+                        Console.WriteLine("\n----------------------------------------");
+                        Console.WriteLine("Choose a number to see it's factortial function until negative number is entered: ");
                         miau = Console.ReadLine();
-                        if (miau == "q") break;
                         miauS = int.Parse(miau);
+                        b = miauS;
+                        if (miauS < 0 || miau == "q")
+                        {
+                            Console.WriteLine("Program ended.");
+                            break;
+                        }
                     }
                 }
                 if (xb == 2)
                 {
                     while (true)
                     {
-                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        Console.Write("Enter any number: ");
                         var miau = Console.ReadLine();
                         if (miau == "q") break;
                         int miauS = int.Parse(miau);
+                        char[] dodo = miau.ToCharArray();
+                        int i = 0;
+                        while (dodo.Length > i)
+                        {
+                            Console.Write(dodo[i] + ", ");
+                            i++;
+                        }
                     }
                 }
-                if (xb == 2)
+                if (xb == 3)
                 {
                     while (true)
                     {
-                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        Console.Write("Number: ");
                         var miau = Console.ReadLine();
                         if (miau == "q") break;
                         int miauS = int.Parse(miau);
+                        int i = 0;
+                        string a = "*";
+                        while (miauS > i)
+                        {
+                            Console.WriteLine(a);
+                            a += "*";
+                            i++;
+                        }
                     }
                 }
             }
         }
         static void uzduotis22()
         {
+            while (true)
+            {
+                Console.WriteLine("Choose an app: ");
+                Console.WriteLine("1. Integer program");                  // i don't get it how to do tas 2.1 https://codeacademylt.sharepoint.com/:p:/r/sites/NETUA2/_layouts/15/Doc.aspx?sourcedoc=%7BDE28CB40-BE61-4AEB-9554-1986E003339E%7D&file=06.%20While.pptx&action=edit&mobileredirect=true
+                Console.WriteLine("2. Square number program");
+                Console.WriteLine("3. Int group program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                if (xb == 1)
+                {
+                    Console.Write("Number: ");
+                    var miau = Console.ReadLine();
+                    if (miau == "q") break;
+                    //int miauS = int.Parse(miau);
+                    int i = 0;
+                    while (true)
+                    {
+                        if (int.TryParse(miau, out int number))
+                        {
+                            Console.WriteLine("----------------------------------------");
+                            Console.WriteLine($"number is valid: {number}");
+                            Console.WriteLine("----------------------------------------");
+                            break;
+                        }
+                        Console.Write("Number!!!: ");
+                        miau = Console.ReadLine();
+                        if (miau == "q") break;
+                    }
+                }
+                if (xb == 2)
+                {
+                    Console.Write("Enter a number Y to be raised to power X: ");
+                    var y = Console.ReadLine();
+                    if (y == "q") break;
+                    int y1 = int.Parse(y);
+
+                    Console.Write("Enter power: ");
+                    var x = Console.ReadLine();
+                    if (x == "q") break;
+                    int x1 = int.Parse(x);
+
+                    int i = 1;
+                    int num = y1;
+                    while (i < x1)
+                    {
+                        num *= y1;
+                        i++;
+                    }
+                    Console.WriteLine("----------------------------------------");
+                    Console.WriteLine($"Your number '{y1}' raised to the power of '{x1}' is = '{num}'");
+                    Console.WriteLine("----------------------------------------");
+                }
+                if (xb == 3)
+                {
+                    while (true)
+                    {
+                        Console.Write("\nEnter a number X to be repeated: ");
+                        var y = Console.ReadLine();
+                        if (y == "q") break;
+                        if (!int.TryParse(y, out int y1))
+                        {
+                            Console.WriteLine("Entered number is not valid!");
+                            break;
+                        }
+
+                        Console.Write("Enter number of repetition: ");
+                        var x = Console.ReadLine();
+                        if (x == "q") break;
+                        if (!int.TryParse(x, out int x1))
+                        {
+                            Console.WriteLine("Entered number is not valid!");
+                            break;
+                        }
+
+                        int i = 1;
+                        string repet = y;
+                        Console.Write(repet + " -> ");
+                        while (i < x1)
+                        {
+                            repet += y;
+                            Console.Write(repet + " -> ");
+                            i++;
+                        }
+                    }
+                }
+            }
         }
         static void uzduotis23()
         {
+            while (true)
+            {
+                Console.WriteLine("1. Digit triangle program");
+                Console.WriteLine("2. ATM program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                if (xb == 1)
+                {
+                    Console.WriteLine("Enter a number: ");
+                    var x = Console.ReadLine();
+                    if (x == "q") break;
+                    int xc = int.Parse(x);
+                    int i = 1;
+                    Console.WriteLine("----------------------------------------");
+                    while (i <= xc)
+                    {
+                        int j = 1;
+                        while (j <= i)
+                        {
+                            Console.Write(i);
+                            j++;
+                        }
+                        Console.WriteLine();
+                        i++;
+
+                    }
+                    Console.WriteLine("----------------------------------------");
+                }
+
+                if (xb == 2)
+                {
+                    Console.Write("Enter the amount you want to withdraw: ");
+                    string miau = Console.ReadLine();
+
+                    if (!int.TryParse(miau, out int miauS))
+                    {
+                        Console.WriteLine("Please enter a valid withdrawal amount.");
+                        return;
+                    }
+
+                    if (miauS <= 0)
+                    {
+                        Console.WriteLine("Please enter a valid withdrawal amount.");
+                        return;
+                    }
+
+                    int leftEur = miauS;
+
+                    Console.WriteLine("----------------------------------------");
+                    Console.WriteLine($"User entered {miauS} euros.");
+
+                    while (leftEur > 0)
+                    {
+                        int bill = 0;
+
+                        if (leftEur >= 200)
+                        {
+                            bill = 200;
+                        }
+                        else if (leftEur >= 100)
+                        {
+                            bill = 100;
+                        }
+                        else if (leftEur >= 50)
+                        {
+                            bill = 50;
+                        }
+                        else if (leftEur >= 20)
+                        {
+                            bill = 20;
+                        }
+                        else if (leftEur >= 10)
+                        {
+                            bill = 10;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Left amopunt: '{leftEur}' is below withdrawable amount: '10'");
+                            break;
+                        }
+
+                        Console.WriteLine($"{bill} euros");
+                        leftEur -= bill;
+                    }
+                    Console.WriteLine("----------------------------------------");
+                }
+
+            }
         }
         static void uzduotis24()
         {
+            while (true)
+            {
+                Console.WriteLine("Choose an app: ");
+                Console.WriteLine("1. Int sum program" +
+                    "");
+                Console.WriteLine("2. Password program");
+                Console.WriteLine("3. Random guesser program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
 
+                if (xb == 1)
+                {
+                    Console.WriteLine("----------------------------------------------------");
+                    while (true)
+                    {
+                        double sum = 0;
+
+                        Console.WriteLine("Enter numbers to calculate their sum.");
+                        Console.WriteLine("Type 'q' (case insensitive) to calculate and exit.");
+                        Console.WriteLine("----------------------------------------------------");
+
+                        while (true)
+                        {
+                            Console.Write("Enter a number or 'q' to quit: ");
+                            string input = Console.ReadLine().Trim().ToLower();
+
+                            if (input == "q")
+                            {
+                                break;
+                            }
+
+                            if (double.TryParse(input, out double number))
+                            {
+                                sum += number;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter a valid number or 'q'.");
+                            }
+                        }
+
+                        Console.WriteLine("----------------------------------------------------");
+                        Console.WriteLine($"The sum of the entered numbers is: {sum}");
+                        Console.WriteLine("----------------------------------------------------");
+                    }
+                }
+                if (xb == 2)
+                {
+                    while (true)
+                    {
+                        string pass = "belekas";
+                        string miau;
+
+                        Console.WriteLine("----------------------------------------------------");
+                        do
+                        {
+                            Console.Write("Enter the password: ");
+                            miau = Console.ReadLine();
+                            if (miau != pass)
+                            {
+                                Console.WriteLine("Incorrect password. Try again.");
+                            }
+
+                        }
+                        while (miau != pass);
+                        Console.WriteLine("Correct password entered. Access granted!");
+                        Console.WriteLine("----------------------------------------------------");
+                    }
+                }
+                if (xb == 3)
+                {
+                    while (true)
+                    {
+                        Random random = new Random();
+                        int randomNumber = random.Next(1, 101);
+                        int guesses;
+                        int tries = 0;
+
+                        Console.WriteLine("----------------------------------------------------");
+                        Console.WriteLine("Guess the random number between 1 and 100.");
+                        Console.WriteLine("----------------------------------------------------");
+
+                        do
+                        {
+                            Console.Write("Enter your guess: ");
+                            if (int.TryParse(Console.ReadLine(), out guesses))
+                            {
+                                tries++;
+
+                                if (guesses == randomNumber)
+                                {
+                                    Console.WriteLine($"Congratulations! You guessed the correct number '{randomNumber}' in {tries} tries.");
+                                }
+                                else if (guesses < randomNumber)
+                                {
+                                    Console.WriteLine("The random number is greater. Try again.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The random number is smaller. Try again.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid input. Please enter a valid number.");
+                            }
+                        }
+                        while (guesses != randomNumber);
+                        Console.WriteLine("----------------------------------------------------");
+                    }
+                }
+            }
         }
         static void projektasWhile()
         {
@@ -1825,7 +2135,7 @@ namespace ConsoleAppCA
 //                int miauS = int.Parse(miau);
 //            }
 //        }
-//        if (xb == 2)
+//        if (xb == 3)
 //        {
 //            while (true)
 //            {
