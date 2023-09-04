@@ -27,7 +27,10 @@ namespace ConsoleAppCA
                 Console.WriteLine("3. Switch Case");
                 Console.WriteLine("4. String Manipuliacija");
                 Console.WriteLine("5. Ciklai - While");
-                Console.WriteLine("6. ...");
+                Console.WriteLine("6. Meetodai");
+                Console.WriteLine("7. ...");
+                Console.WriteLine("8. ..");
+                Console.WriteLine("9. .");
                 Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
                 string slct = Console.ReadLine();
 
@@ -176,9 +179,21 @@ namespace ConsoleAppCA
                         }
                         break;
                     case "6":
-                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=NERA!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=UZDUOTYS=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+                        Console.WriteLine("PASIRINKITE UZDUOTI NUO 25 IKI 26 ARBA PROJEKTAS");
+                        slct = Console.ReadLine();
+                        switch (slct)
+                        {
+                            case "25":
+                                uzduotis25();
+                                break;
+                            case "26":
+                                uzduotis26();
+                                break;
+                            default:
+                                Console.WriteLine("blogas pasirinkimas");
+                                break;
+                        }
                         navigacija();
                         break;
                     case "7":
@@ -1636,6 +1651,8 @@ namespace ConsoleAppCA
         {
 
         }
+        #endregion
+        #region WhileCiklai
         static void uzduotis20()
         {
             while (true)
@@ -2100,9 +2117,96 @@ namespace ConsoleAppCA
         {
 
         }
+        #endregion
+        #region Metodai
+        static void uzduotis25()
+        {
+            while (true)
+            {
+                Console.WriteLine("Choose an app: ");
+                Console.WriteLine("1. Pass checker program");
+                Console.WriteLine("2. Email valid program");
+                Console.WriteLine("3. Exchange program");
+                var ab = Console.ReadLine();
+                if (ab == "q") break;
+                int xb = int.Parse(ab);
+
+                if (xb == 1)
+                {
+                    Console.WriteLine("----------------------------------------------------");
+                    while (true)
+                    {
+                        Console.Write("Enter a password:");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        if (!IsPasswordvalid(miau))
+                        {
+                            Console.WriteLine("Try again!");
+                        }
+                        else Console.WriteLine("Gratz pass is aukei!");
+                    }
+                    Console.WriteLine("----------------------------------------------------");
+                }
+                if (xb == 2)
+                {
+                    Console.WriteLine("----------------------------------------------------");
+                    while (true)
+                    {
+                        Console.Write("Enter an email address: ");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+
+                        bool isValid = IsEmailValid(miau);
+
+                        Console.WriteLine(isValid ? "The email address is not valid." : "The email address is valid.");
+                    }
+                    Console.WriteLine("----------------------------------------------------");
+                }
+                if (xb == 3)
+                {
+                    Console.WriteLine("----------------------------------------------------");
+                    while (true)
+                    {
+                        Console.Write("Iveskite kazka skaitmenisku pavidalu (1-999) :");
+                        var miau = Console.ReadLine();
+                        if (miau == "q") break;
+                        int miauS = int.Parse(miau);
+                    }
+                    Console.WriteLine("----------------------------------------------------");
+                }
+            }
+        }
+        static void uzduotis26()
+        {
+
+        }
+        static bool IsPasswordvalid(string password)
+        {
+            bool yo = true;
+            return password.Length > 8 ? yo : !yo;
+        }
+
+        static bool IsEmailValid(string email)
+        {
+            if (email.Contains("@") && email.Contains("."))                                                     // Check if the email contains "@" and "."
+            {
+                int atIndex = email.IndexOf("@");
+                int dotIndex = email.LastIndexOf(".");                                                          // Check if "@" appears before "."
+
+                if (atIndex < dotIndex)
+                {
+                    if (atIndex > 0 && dotIndex < email.Length - 1)                                             // Check if there's at least one character before "@" and after "."
+                    {
+                        return false;                                                                            // The email is valid
+                    }
+                }
+            }
+
+            return true;                                                                                       // The email is not valid
+        }
+        #endregion
     }
 }
-#endregion
 //static void pavyzdys()
 //{
 //    while (true)
